@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middleware/auth");
+const User = require("./models/User"); // 👈 ADD THIS
 
 const app = express();
 app.use(express.json());
@@ -27,6 +28,16 @@ app.get("/api/profile", authMiddleware, (req, res) => {
     message: "Welcome to your profile 🔐",
     userId: req.user.id
   });
+});
+
+// ✅ NEW ROUTE: GET CURRENT USER 🔥
+app.get("/api/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching user" });
+  }
 });
 
 // ✅ FIX PORT FOR RAILWAY
