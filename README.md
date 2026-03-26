@@ -1,3 +1,13 @@
+## 🌍 Live API
+
+Base URL:
+https://authmaximos.up.railway.app
+
+### Endpoints:
+
+POST /api/auth/register  
+POST /api/auth/login  
+GET /api/profile  
 # 🔐 Auth System API (Node.js)
 
 ## 📌 Description
