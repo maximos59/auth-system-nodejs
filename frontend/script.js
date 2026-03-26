@@ -1,63 +1,55 @@
 const API = "https://authmaximos.up.railway.app";
 
-// 🔺 Cursor
-const cursor = document.createElement("div");
-cursor.classList.add("cursor");
-document.body.appendChild(cursor);
-
-document.addEventListener("mousemove", (e) => {
-  cursor.style.top = e.clientY + "px";
-  cursor.style.left = e.clientX + "px";
-});
-
 // REGISTER
 async function register() {
-  const email = document.getElementById("regEmail").value;
-  const password = document.getElementById("regPassword").value;
+  const body = {
+    firstName: document.getElementById("firstName").value,
+    lastName: document.getElementById("lastName").value,
+    age: document.getElementById("age").value,
+    country: document.getElementById("country").value,
+    nickname: document.getElementById("nickname").value,
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value
+  };
 
   const res = await fetch(API + "/api/auth/register", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify(body)
   });
 
-  const data = await res.json();
-  document.getElementById("status").innerText = data.message;
+  alert("Account created");
 }
 
 // LOGIN
 async function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
   const res = await fetch(API + "/api/auth/login", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({
+      email: document.getElementById("loginEmail").value,
+      password: document.getElementById("loginPassword").value
+    })
   });
 
   const data = await res.json();
 
   if (data.token) {
     localStorage.setItem("token", data.token);
-    window.location.href = "dashboard.html"; // 🔥 REDIRECT
-  } else {
-    document.getElementById("status").innerText = "Login failed";
+    document.getElementById("auth").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
   }
 }
 
 // PROFILE
-async function getProfile() {
-  const token = localStorage.getItem("token");
-
+async function loadProfile() {
   const res = await fetch(API + "/api/profile", {
     headers: {
-      "Authorization": "Bearer " + token
+      "Authorization": "Bearer " + localStorage.getItem("token")
     }
   });
 
   const data = await res.json();
-
   document.getElementById("profile").innerText =
     JSON.stringify(data, null, 2);
 }
@@ -65,5 +57,5 @@ async function getProfile() {
 // LOGOUT
 function logout() {
   localStorage.removeItem("token");
-  window.location.href = "login.html";
+  location.reload();
 }
