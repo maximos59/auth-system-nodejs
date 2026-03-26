@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: black;
+  color: gold;
+  cursor: none;
+}
+
+/* Background glow */
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #1a1a1a, black);
+  z-index: -1;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 42px;
+  letter-spacing: 3px;
+  color: gold;
+  text-shadow: 0 0 20px gold;
+}
+
+/* Card */
+.card {
+  width: 320px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(10,10,10,0.9);
+  box-shadow: 0 0 25px gold;
+  text-align: center;
+}
+
+/* Inputs */
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px;
+  border: 1px solid gold;
+  border-radius: 10px;
+  background: black;
+  color: gold;
+}
+
+/* Buttons */
+button {
+  padding: 12px 20px;
+  background: gold;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ffd700;
+  transform: scale(1.05);
+}
+
+/* Cursor */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: gold;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  pointer-events: none;
+}
